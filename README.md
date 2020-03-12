@@ -2,7 +2,7 @@
 
 ### COLORS
 
-This is taken from build file of gatsby hence the the references therein.
+This is taken from build file of gatsby hence the references therein.\
 Will need to clean up.
 
 $primary-color: #7accb9;/
