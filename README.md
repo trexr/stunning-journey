@@ -1,5 +1,11 @@
 # stunning-journey
 
+To build files
+```
+sh build.sh
+```
+
+
 ### COLORS
 
 This is taken from build file of gatsby hence the references therein.\
