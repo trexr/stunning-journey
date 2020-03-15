@@ -14,11 +14,11 @@ section{
   display:none;
 }
 
-#home-wrapper .nav-item a{
+#home-wrapper .nav-item a, #home-wrapper .fa {
   color: #fff;
 
 }
-#home-wrapper .nav-item a:hover{
+#home-wrapper .nav-item a:hover, #home-wrapper .fa:hover{
   color:#7accb9;
 
 }
