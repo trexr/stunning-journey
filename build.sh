@@ -7,7 +7,6 @@ do
   filename=${file%%.*}
   cat templates/top.html ${filename}.html templates/bottom.html > docs/${filename}.html
 
-  
   pagename=${filename}
   if [ ${filename} = "index" ]; then 
    pagename="home"
