@@ -1,0 +1,1 @@
+cat templates/top.html about.html templates/bottom.html > docs/about.html
