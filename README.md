@@ -2,7 +2,7 @@
 
 To build files
 ```
-sh build.sh
+python3 build.py
 ```
 
 
