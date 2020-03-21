@@ -24,15 +24,15 @@ def mock_data():
             "title": "home",
             "nav-name": "Trevor Stearns"
          },
+        {"filename": "content/work.html",
+            "output": "work.html",
+            "title": "work",
+            "nav-name": "work"},
         {"filename": "content/about.html",
             "output": "about.html",
             "title": "about",
             "nav-name": "about me"
          },
-        {"filename": "content/work.html",
-            "output": "work.html",
-            "title": "work",
-            "nav-name": "work"},
 
     ]
     return data
