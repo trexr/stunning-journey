@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="description" content="" />
   <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
-  <title>Trevor Stearns - home </title>
+  <title>Trevor Stearns - ${title} </title>
 
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -22,11 +22,11 @@
         your experience.
       </p><!
     [endif]-->
-  <div class="" id="home-wrapper">
+  <div class="" id="${title}-wrapper">
     <div class="header container">
       <ul class="nav nav-pills justify-content-end align-items-center">
 
-        <li class="nav-item"><a href="index.html" class="nav-link active">Trevor Stearns</a></li><li class="nav-item"><a href="about.html" class="nav-link ">about me</a></li><li class="nav-item"><a href="work.html" class="nav-link ">work</a></li>
+        ${nav}
 
         <li class="nav-item">
           <a href="https://linkedin.com/in/trevor-stearns" rel="noopener noreferrer" target="_blank"
@@ -42,35 +42,7 @@
         </li>
       </ul>
     </div>
-    <section id="hero">
-  <div class="parallax-banner">
-    <div class="parallax-outer">
-      <div class="parallax-inner">
-        <div
-          class="parallax-banner-layer-0 hero-animate"
-          style="background-image:url(images/stearns-hero.jpg);background-position:center center;background-size:cover;position:absolute"
-        ></div>
-      </div>
-    </div>
-    <div></div>
-  </div>
-  <div class="container">
-    <div class="d-flex">
-      <div>
-        <h1 class="hero-title"><span>Hi, I'm Trevor.</span></h1>
-        <h2>I design and develop for the web.</h2>
-        <div class="hero-links">
-          <span class="hero-cta"
-            ><a class="btn" href="./work.html">See Work</a></span
-          ><span class="hero-cta"
-            ><a class="btn" href="./about.html">About Me</a></span
-          >
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
+    ${filename}
   </div>
   <script src="scripts/vendor.js"></script>
   <script src="scripts/main.js"></script>
