@@ -15,10 +15,9 @@ def constants():
     TMPL_NAV = TMPL_DIR + "nav.html"
     return [TMPL_BASE, TMPL_DIR, TMPL_NAV, BUILD_DIR, PAGE_DATA]
 
-# mock service package
-
 
 def mock_data():
+    # mock service package
     data = [
         {"filename": "content/index.html",
             "output": "index.html",
