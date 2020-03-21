@@ -1,27 +1,10 @@
 from string import Template
+import sys
 
 
 def main():
     *FIRST, PAGE_DATA = constants()
     build_content(PAGE_DATA)
-
-
-# mock service package
-def mock_data():
-    data = [
-        {"filename": "content/about.html",
-            "output": "docs/about.html",
-            "title": "about"
-         },
-        {"filename": "content/index.html",
-            "output": "docs/index.html",
-            "title": "index"
-         },
-        {"filename": "content/work.html",
-            "output": "docs/work.html",
-            "title": "work"}
-    ]
-    return data
 
 
 def constants():
@@ -32,16 +15,46 @@ def constants():
     TMPL_NAV = TMPL_DIR + "nav.html"
     return [TMPL_BASE, TMPL_DIR, TMPL_NAV, BUILD_DIR, PAGE_DATA]
 
+# mock service package
+
+
+def mock_data():
+    data = [
+        {"filename": "content/index.html",
+            "output": "index.html",
+            "title": "home",
+            "nav-name": "Trevor Stearns"
+         },
+        {"filename": "content/about.html",
+            "output": "about.html",
+            "title": "about",
+            "nav-name": "about me"
+         },
+        {"filename": "content/work.html",
+            "output": "work.html",
+            "title": "work",
+            "nav-name": "work"},
+
+    ]
+    return data
+
 
 def read_file(path):
-    return open(path).read()
+    try:
+        return open(path).read()
+    except:
+        print("     Oops!", sys.exc_info()[0], "occured: ", path)
+        print("     Make sure you have correct files in content folder.")
 
 
 def create_page(pathandfile, content):
-    if pathandfile and content:
-        open(pathandfile, 'w+').write(content)
-    else:
-        print("Missing path to file or content ")
+    *VARS, BUILD_DIR, PAGE_DATA = constants()
+
+    try:
+        open(BUILD_DIR + pathandfile, 'w+').write(content)
+        print("Created", pathandfile)
+    except:
+        print("     Oops!", sys.exc_info()[0], "occured: ", pathandfile)
 
 
 def swap_file_path_for_text(keyword, collection):
@@ -51,24 +64,41 @@ def swap_file_path_for_text(keyword, collection):
     return collection
 
 
+def build_navigation(collection, activepage):
+    nav = ''
+    for page in collection:
+        # check to see if has nav-name key else ignore
+        if 'nav-name' in page:
+            active = "active" if activepage == page['title'] else ""
+            nav += '<li class="nav-item"><a href="' + \
+                page["output"] + '" class="nav-link ' + \
+                active + '">' + page["nav-name"] + '</a></li>'
+
+    return nav
+
+
 def build_content(data):
-    TMPL_BASE, TMPL_DIR, TMPL_NAV, BUILD_DIR, PAGE_DATA = constants()
+    TMPL_BASE, *VARS = constants()
 
     # generate template for page creation
     template_text = read_file(TMPL_BASE)
     template = Template(template_text)
-    nav = read_file(TMPL_NAV)
+    # nav = read_file(TMPL_NAV)
 
     for page in data:
-        # add in nav template
-        # will constomize this to inject appropriate active class in nav in future
+        # add in nav template to page dict
         if not "nav" in page:
+            # create page based navigation
+            nav = build_navigation(data, page['title'])
             page["nav"] = nav
-            print(page)
+
         # create mappings for page generation
         tmpl_mapping = swap_file_path_for_text("filename", page)
         page_html = template.safe_substitute(tmpl_mapping)
+
         create_page(tmpl_mapping["output"], page_html)
+
+    print("Build complete")
 
 
 main()
