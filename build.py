@@ -43,11 +43,11 @@ def read_file(path):
         return open(path).read()
     except:
         print("     Oops!", sys.exc_info()[0], "occured: ", path)
-        print("     Make sure you have correct files in content folder.")
+        print("     Make sure you have correct file named in content folder.")
 
 
 def create_page(pathandfile, content):
-    *VARS, BUILD_DIR, PAGE_DATA = constants()
+    *_, BUILD_DIR, PAGE_DATA = constants()
 
     try:
         open(BUILD_DIR + pathandfile, 'w+').write(content)
@@ -77,7 +77,7 @@ def build_navigation(collection, activepage):
 
 
 def build_content(data):
-    TMPL_BASE, *VARS = constants()
+    TMPL_BASE, *_ = constants()
 
     # generate template for page creation
     template_text = read_file(TMPL_BASE)
