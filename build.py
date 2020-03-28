@@ -1,103 +1,110 @@
 from string import Template
 import sys
 
+# TODO:
+# Need to templatize navigation and remove markup from base template,
+# Right now using function to create list items then inject that into base emplate instead of the entire nav
+
 
 def main():
-    *FIRST, PAGE_DATA = constants()
-    build_content(PAGE_DATA)
-
-
-def constants():
     TMPL_DIR = "templates/"
     BUILD_DIR = "docs/"
-    PAGE_DATA = mock_data()
+    PAGE_DATA = pages_to_build()
     TMPL_BASE = TMPL_DIR + "base.html"
     TMPL_NAV = TMPL_DIR + "nav.html"
-    return [TMPL_BASE, TMPL_DIR, TMPL_NAV, BUILD_DIR, PAGE_DATA]
+
+    # check that TMPL file exists and assign
+    template_text = read_file(TMPL_BASE)
+    # create template for the base HTML pages
+    template = Template(template_text)
+
+    # Loops over each "page" dict in  return data list
+    if type(PAGE_DATA) is list:
+        for page in PAGE_DATA:
+            # Adding in nav key to each page dictionary if its not already there
+            # Doing this because we may want to add a different nav template for certain pages in future
+            if not "pagenavigation" in page:
+
+                # Passes current page into generated navigation html for hightlighting its active state
+
+                nav = create_navigation_HTML(PAGE_DATA, page['title'])
+                page["pagenavigation"] = nav
+
+            # mutates 'filename' value and assigns HTML found in "filename" key
+            tmpl_mapping = swap_file_for_HTML("filename", page)
+
+            # uses keys from mapping to create html page from template
+            page_html = template.safe_substitute(tmpl_mapping)
+
+            #  Use "output" value for filename and save to specified directory
+            create_file(tmpl_mapping["output"], page_html, BUILD_DIR)
+    else:
+        print("---- Data needs to be list so we can build navigation links")
+
+    print("Build complete")
 
 
-def mock_data():
+def pages_to_build():
     # mock service package
     data = [
         {"filename": "content/index.html",
             "output": "index.html",
             "title": "home",
-            "nav-name": "Trevor Stearns"
-         },
-        {"filename": "content/about.html",
-            "output": "about.html",
-            "title": "about",
-            "nav-name": "about me"
+            "nav-title": "Trevor Stearns"
          },
         {"filename": "content/work.html",
             "output": "work.html",
             "title": "work",
-            "nav-name": "work"},
+            "nav-title": "work"},
+        {"filename": "content/about.html",
+            "output": "about.html",
+            "title": "about",
+            "nav-title": "about me"
+         },
 
     ]
     return data
 
 
-def read_file(path):
-    try:
-        return open(path).read()
-    except:
-        print("     Oops!", sys.exc_info()[0], "occured: ", path)
-        print("     Make sure you have correct files in content folder.")
-
-
-def create_page(pathandfile, content):
-    *VARS, BUILD_DIR, PAGE_DATA = constants()
-
-    try:
-        open(BUILD_DIR + pathandfile, 'w+').write(content)
-        print("Created", pathandfile)
-    except:
-        print("     Oops!", sys.exc_info()[0], "occured: ", pathandfile)
-
-
-def swap_file_path_for_text(keyword, collection):
+def swap_file_for_HTML(keyword, collection):
+    # simple function that replaces a value with the file contents.
     for key in collection:
         if(key == keyword):
             collection[key] = read_file(collection[key])
     return collection
 
 
-def build_navigation(collection, activepage):
+def read_file(path):
+    try:
+        return open(path).read()
+    except:
+        print("---- Oops!", sys.exc_info()[0], "occured: ", path)
+        print("---- Make sure you have correct file named in content folder.")
+
+
+def create_file(pathandfile, content, builddir):
+    try:
+        open(builddir + pathandfile, 'w+').write(content)
+        print("Created", pathandfile)
+    except:
+        print("---- Oops!", sys.exc_info()[0], "occured: ", pathandfile)
+
+
+def create_navigation_HTML(collection, activepage):
+    # Builds list of all navigation links from collection of pages on only if it has a 'nav-title' key
+    # There may be pages we dont want to be listed in nav in future so using nav-title as conditional
+    # Also inserts active class to respective pages
     nav = ''
     for page in collection:
-        # check to see if has nav-name key else ignore
-        if 'nav-name' in page:
+        # check to see if has nav-title key else ignore
+        if 'nav-title' in page:
+            # checking title
             active = "active" if activepage == page['title'] else ""
             nav += '<li class="nav-item"><a href="' + \
                 page["output"] + '" class="nav-link ' + \
-                active + '">' + page["nav-name"] + '</a></li>'
+                active + '">' + page["nav-title"] + '</a></li>'
 
     return nav
-
-
-def build_content(data):
-    TMPL_BASE, *VARS = constants()
-
-    # generate template for page creation
-    template_text = read_file(TMPL_BASE)
-    template = Template(template_text)
-    # nav = read_file(TMPL_NAV)
-
-    for page in data:
-        # add in nav template to page dict
-        if not "nav" in page:
-            # create page based navigation
-            nav = build_navigation(data, page['title'])
-            page["nav"] = nav
-
-        # create mappings for page generation
-        tmpl_mapping = swap_file_path_for_text("filename", page)
-        page_html = template.safe_substitute(tmpl_mapping)
-
-        create_page(tmpl_mapping["output"], page_html)
-
-    print("Build complete")
 
 
 main()
