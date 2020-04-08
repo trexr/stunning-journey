@@ -1,8 +1,8 @@
 
-from string import Template
 import sys
 import glob
 import os
+from jinja2 import Template
 
 # TODO:
 # Need to templatize navigation and remove markup from base template,
@@ -15,7 +15,6 @@ def main():
     BUILD_DIR = "docs/"
     PAGE_DATA = pages_to_build()
     TMPL_BASE = TMPL_DIR + "base.html"
-    TMPL_NAV = TMPL_DIR + "nav.html"
 
     template_text = open(TMPL_BASE).read()
     # create template for the base HTML pages
@@ -36,11 +35,14 @@ def main():
             nav = create_navigation_HTML(PAGE_DATA, page['title'])
             page["pagenavigation"] = nav
 
+        template_html = open(TMPL_BASE).read()
+        template = Template(template_html)
+
         # mutates 'filename' value and assigns HTML found in "filename" key
         tmpl_mapping = swap_file_for_html("filename", page)
 
         # uses keys from mapping to create html page from template
-        page_html = template.safe_substitute(tmpl_mapping)
+        page_html = template.render(tmpl_mapping)
 
         #  Use "output" value for filename and save to specified directory
         create_file(tmpl_mapping["output"], page_html, BUILD_DIR)
@@ -50,38 +52,38 @@ def main():
 
 def pages_to_build():
 
-    # mock service package
-    # all_html_files = glob.glob("content/*.html")
-    # pages = []
-    # print(all_html_files)
-    # for file_path in all_html_files:
-    #     file_name = os.path.basename(file_path)
-    #     name_only, extension = os.path.splitext(file_name)
-    #     print(name_only)
-    #     pages.append({"filename": file_path,
-    #                   "output": file_name,
-    #                   "title": name_only,
-    #                   "nav-title": name_only
-    #                   })
+    html_files = glob.glob("content/*.html")
+    pages = []
+
+    for file_path in html_files:
+        file_name = os.path.basename(file_path)
+        name_only, extension = os.path.splitext(file_name)
+        print(name_only)
+        pages.append(
+            {"filename": file_path,
+             "output": file_name,
+             "title": name_only,
+             "nav-title": name_only
+             })
 
     # pages = []pages.append({"filename": "content/index.html","title": "Index","output": "docs/index.html",})print(pages)
-    pages = [
-        {"filename": "content/index.html",
-         "output": "index.html",
-         "title": "home",
-         "nav-title": "Trevor Stearns"
-         },
-        {"filename": "content/work.html",
-         "output": "work.html",
-         "title": "work",
-         "nav-title": "work"},
-        {"filename": "content/about.html",
-         "output": "about.html",
-         "title": "about",
-         "nav-title": "about me"
-         },
+    # pages = [
+    #     {"filename": "content/index.html",
+    #      "output": "index.html",
+    #      "title": "home",
+    #      "nav-title": "Trevor Stearns"
+    #      },
+    #     {"filename": "content/work.html",
+    #      "output": "work.html",
+    #      "title": "work",
+    #      "nav-title": "work"},
+    #     {"filename": "content/about.html",
+    #      "output": "about.html",
+    #      "title": "about",
+    #      "nav-title": "about me"
+    #      },
 
-    ]
+    # ]
     return pages
 
 
