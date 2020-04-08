@@ -87,7 +87,7 @@ def pages_to_build():
 
 def swap_file_for_html(keyword, collection):
     # simple function that replaces a value with the file contents.
-    collection[key] = open(collection[key]).read()
+    collection[keyword] = open(collection[keyword]).read()
     return collection
 
 
