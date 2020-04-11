@@ -15,6 +15,7 @@ def main():
     BUILD_DIR = "docs/"
     PAGE_DATA = pages_to_build()
     TMPL_BASE = TMPL_DIR + "base.html"
+    TMPL_NAV = TMPL_DIR + "nav.html"
 
     template_text = open(TMPL_BASE).read()
     # create template for the base HTML pages
@@ -29,11 +30,16 @@ def main():
         # for certain pages in future
         if "pagenavigation" not in page:
 
+            file_nav = open(TMPL_NAV).read()
+            tmpl_nav = Template(file_nav)
+            nav_html = tmpl_nav.render(pages=PAGE_DATA, current=page['title'])
             # Passes current page into generated navigation html for
             # hightlighting its active state
 
-            nav = create_navigation_HTML(PAGE_DATA, page['title'])
-            page["pagenavigation"] = nav
+            # nav = create_navigation_HTML(PAGE_DATA, page['title'])
+            page["pagenavigation"] = nav_html
+
+        page["pages"] = PAGE_DATA`
 
         template_html = open(TMPL_BASE).read()
         template = Template(template_html)

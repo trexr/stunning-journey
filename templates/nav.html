@@ -1,7 +1,9 @@
 <div class="header container">
   <ul class="nav nav-pills justify-content-end align-items-center">
 
-    ${nav-page-links}
+    {% for page in pages %}
+    <a href="{{page.output_filename}}">{{page.title}}</a>
+    {% endfor %}
 
     <li class="nav-item">
       <a href="https://linkedin.com/in/trevor-stearns" rel="noopener noreferrer" target="_blank" aria-label="linkedin"
