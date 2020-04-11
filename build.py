@@ -66,24 +66,6 @@ def pages_to_build():
              "nav-title": name_only
              })
 
-    # pages = []pages.append({"filename": "content/index.html","title": "Index","output": "docs/index.html",})print(pages)
-    # pages = [
-    #     {"filename": "content/index.html",
-    #      "output": "index.html",
-    #      "title": "home",
-    #      "nav-title": "Trevor Stearns"
-    #      },
-    #     {"filename": "content/work.html",
-    #      "output": "work.html",
-    #      "title": "work",
-    #      "nav-title": "work"},
-    #     {"filename": "content/about.html",
-    #      "output": "about.html",
-    #      "title": "about",
-    #      "nav-title": "about me"
-    #      },
-
-    # ]
     return pages
 
 
