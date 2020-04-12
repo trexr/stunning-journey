@@ -8,8 +8,6 @@ python3 build.py
 
 ### COLORS
 
-This is taken from build file of gatsby hence the references therein.\
-Will need to clean up.
 
 Rebuild site: python manage.py build
 Create new default content page: python manage.py new 
