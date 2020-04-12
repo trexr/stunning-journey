@@ -1,19 +1,13 @@
-
-import sys
 import glob
 import os
-from jinja2 import Template, Environment, BaseLoader
+from jinja2 import Template
 
-# TODO:
-# Need to templatize navigation and remove markup from base template,
-# Right now using function to create list items then inject that into
-#  base template instead of the entire nav
 
 TMPL_DIR = "templates/"
 BUILD_DIR = "docs/"
 TMPL_BASE = TMPL_DIR + "base.html"
 TMPL_NAV = TMPL_DIR + "nav.html"
-DEFAULT_CONTENT = TMPL_DIR + "default.html"
+DEFAULT_CONTENT = open(TMPL_DIR + "default.html").read()
 NAV_TITLES = {
     "index": "Trevor Stearns"
 }
@@ -53,8 +47,6 @@ def main():
 
         #  Use "output" value for filename and save to specified directory
         create_file(page["output"], BUILD_DIR,  page_html)
-
-    print("Build complete")
 
 
 def update_navtitles(data):
