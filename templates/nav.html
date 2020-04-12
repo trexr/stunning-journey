@@ -2,7 +2,9 @@
   <ul class="nav nav-pills justify-content-end align-items-center">
 
     {% for page in pages %}
-    <a href="{{page.output_filename}}">{{page.title}}</a>
+    <li class="nav-item">
+      <a href="{{page.output}}" class="nav-link{{ ' active' if page.title == current else '' }}">{{page.navtitle}}</a>
+    </li>
     {% endfor %}
 
     <li class="nav-item">
