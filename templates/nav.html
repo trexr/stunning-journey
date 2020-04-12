@@ -1,7 +1,11 @@
 <div class="header container">
   <ul class="nav nav-pills justify-content-end align-items-center">
 
-    ${nav-page-links}
+    {% for page in pages %}
+    <li class="nav-item">
+      <a href="{{page.output}}" class="nav-link{{ ' active' if page.title == current else '' }}">{{page.navtitle}}</a>
+    </li>
+    {% endfor %}
 
     <li class="nav-item">
       <a href="https://linkedin.com/in/trevor-stearns" rel="noopener noreferrer" target="_blank" aria-label="linkedin"

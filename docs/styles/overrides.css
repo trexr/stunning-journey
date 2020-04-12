@@ -2,7 +2,7 @@ section{
   background-color: transparent;
 }
 
-#home-wrapper .header {
+#index-wrapper .header {
   position: absolute;
   right:0;
   left:0;
@@ -18,15 +18,15 @@ section{
   left:0;
  overflow: hidden;
 }
-#home-wrapper .nav-item:first-child{
+#index-wrapper .nav-item:first-child{
   display:none;
 }
 
-#home-wrapper .nav-item a, #home-wrapper .fa {
+#index-wrapper .nav-item a, #index-wrapper .fa {
   color: #fff;
 
 }
-#home-wrapper .nav-item a:hover, #home-wrapper .fa:hover{
+#index-wrapper .nav-item a:hover, #index-wrapper .fa:hover{
   color:#7accb9;
 
 }
