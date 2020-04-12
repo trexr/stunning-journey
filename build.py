@@ -92,23 +92,4 @@ def create_file(pathandfile, content, builddir):
     open(builddir + pathandfile, 'w+').write(content)
 
 
-def create_navigation_HTML(collection, activepage):
-    # Builds list of all navigation links from collection of pages on
-    # only if it has a 'nav-title' key.
-    # There may be pages we don't want to be listed in nav in future so using
-    # nav-title as conditional
-    # Also inserts active class to respective pages
-    nav = ''
-    for page in collection:
-        # check to see if has nav-title key else ignore
-        if 'nav-title' in page:
-            # che3cking title
-            active = "active" if activepage == page['title'] else ""
-            nav += '<li class="nav-item"><a href="' + \
-                page["output"] + '" class="nav-link ' + \
-                active + '">' + page["nav-title"] + '</a></li>'
-
-    return nav
-
-
 main()
