@@ -13,6 +13,7 @@ TMPL_DIR = "templates/"
 BUILD_DIR = "docs/"
 TMPL_BASE = TMPL_DIR + "base.html"
 TMPL_NAV = TMPL_DIR + "nav.html"
+DEFAULT_CONTENT = TMPL_DIR + "default.html"
 NAV_TITLES = {
     "index": "Trevor Stearns"
 }
@@ -51,7 +52,7 @@ def main():
         page_html = template.render(tmpl_mapping)
 
         #  Use "output" value for filename and save to specified directory
-        create_file(page["output"], page_html, BUILD_DIR)
+        create_file(page["output"], BUILD_DIR,  page_html)
 
     print("Build complete")
 
@@ -88,5 +89,5 @@ def swap_file_for_html(keyword, collection):
     return collection
 
 
-def create_file(pathandfile, content, builddir):
+def create_file(pathandfile, builddir, content=DEFAULT_CONTENT):
     open(builddir + pathandfile, 'w+').write(content)
