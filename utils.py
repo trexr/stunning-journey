@@ -90,4 +90,3 @@ def swap_file_for_html(keyword, collection):
 
 def create_file(pathandfile, content, builddir):
     open(builddir + pathandfile, 'w+').write(content)
-
